@@ -14,13 +14,14 @@ from django.core.cache import cache
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 test_image_gif = (
-            b'\x47\x49\x46\x38\x39\x61\x02\x00'
-            b'\x01\x00\x80\x00\x00\x00\x00\x00'
-            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
-            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
-            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-            b'\x0A\x00\x3B'
+    b'\x47\x49\x46\x38\x39\x61\x02\x00'
+    b'\x01\x00\x80\x00\x00\x00\x00\x00'
+    b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+    b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+    b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+    b'\x0A\x00\x3B'
 )
+
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostPagesTests(TestCase):
@@ -49,7 +50,6 @@ class PostPagesTests(TestCase):
             author=cls.user,
             user=cls.follower,
         )
-        
 
     def setUp(self):
         self.authorized_client = Client()
@@ -202,7 +202,7 @@ class PostPagesTests(TestCase):
         for urls in urls_next:
             response = self.authorized_client.get(urls)
             cache.clear()
-            tested_post =  response.context['page_obj'][0]
+            tested_post = response.context['page_obj'][0]
             self.assertEqual(tested_post.image, self.post.image)
         response = self.authorized_client.get(
             reverse('posts:post_detail', kwargs={
@@ -292,7 +292,7 @@ class PostPagesTests(TestCase):
         context = response.context['page_obj'].object_list
         self.assertNotIn(self.post, context)
 
-        
+
 class PaginatorViewsTest(TestCase):
     @classmethod
     def setUpClass(cls):

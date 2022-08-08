@@ -52,7 +52,7 @@ class Post(models.Model):
         return self.text
 
 
-class  Comment(models.Model):
+class Comment(models.Model):
     text = models.TextField()
     post = models.ForeignKey(
         Post,
@@ -70,6 +70,7 @@ class  Comment(models.Model):
         auto_now_add=True,
         verbose_name='Дата комментария',
     )
+
     class Meta:
         ordering = ['-created']
         verbose_name = 'Комментарий'
@@ -87,8 +88,8 @@ class Follow(models.Model):
         related_name='following',
         verbose_name='Автор',
     )
-    user =models.ForeignKey(
-         User,
+    user = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
         blank=True,
         null=True,

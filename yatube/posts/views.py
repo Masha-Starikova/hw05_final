@@ -1,5 +1,3 @@
-from multiprocessing import context
-from pydoc import pager
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
@@ -15,7 +13,7 @@ def get_page(queryset, request):
     return page_obj
 
 
-@cache_page(60 * 15)
+@cache_page(20)
 def index(request):
     posts = Post.objects.all().select_related(
         'group',
@@ -44,13 +42,16 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     author_post = Post.objects.filter(author=author)
     page_obj = get_page(author_post, request)
-    following = (request.user.is_authenticated and author.following.filter(user=request.user).exists())
+    following = (
+        request.user.is_authenticated and author.following.filter(
+        user=request.user).exists()
+    )
     if following:
         following = True
     context = {
         'author': author,
         'page_obj': page_obj,
-        'following':  following,
+        'following': following,
     }
     return render(request, 'posts/profile.html', context)
 
@@ -69,7 +70,7 @@ def post_detail(request, post_id):
 
 @login_required
 def add_comment(request, post_id):
-    # Получите пост 
+    # Получите пост
     post = get_object_or_404(Post, id=post_id)
     form = CommentForm(request.POST or None)
     if form.is_valid():
@@ -80,11 +81,12 @@ def add_comment(request, post_id):
     return redirect('posts:post_detail', post_id=post_id)
 
 
-
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, files=request.FILES or None)
+        form = PostForm(
+            request.POST, files=request.FILES or None
+        )
         context = {
             'form': form,
         }

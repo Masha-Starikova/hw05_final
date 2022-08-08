@@ -25,4 +25,4 @@ class CommentForm(forms.ModelForm):
             'text': 'Текст',
             'author': 'Автор',
             'created': 'Время',
-            }
+        }
