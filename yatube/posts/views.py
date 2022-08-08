@@ -44,7 +44,7 @@ def profile(request, username):
     page_obj = get_page(author_post, request)
     following = (
         request.user.is_authenticated and author.following.filter(
-        user=request.user).exists()
+            user=request.user).exists()
     )
     if following:
         following = True
