@@ -18,16 +18,14 @@ class PostModelTest(TestCase):
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Тестовый пост',
+            text='Ж'*100,
         )
 
     def test_models_have_correct_object_names(self):
         """Проверяем, что у моделей корректно работает __str__."""
-        post = PostModelTest.post
-        group = PostModelTest.group
         list_of_expected_values = {
-            str(post): post.text[:15],
-            str(group): group.title,
+            self.post: self.post.text[:15],
+            self.group: self.group.title,
         }
         for instance, expected_value in list_of_expected_values.items():
             with self.subTest(expected_value=expected_value):
