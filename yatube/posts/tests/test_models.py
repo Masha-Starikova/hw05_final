@@ -31,6 +31,6 @@ class PostModelTest(TestCase):
             with self.subTest(expected_value=expected_value):
                 self.assertEqual(
                     expected_value,
-                    instance,
+                    str(instance),
                     'Метод __str__ работает некорректно!'
                 )
