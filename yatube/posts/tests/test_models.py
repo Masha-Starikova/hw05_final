@@ -18,7 +18,7 @@ class PostModelTest(TestCase):
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Ж'*100,
+            text='Ж' * 100,
         )
 
     def test_models_have_correct_object_names(self):
